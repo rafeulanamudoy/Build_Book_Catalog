@@ -14,11 +14,11 @@ router.post(
   UserController.createUser
 );
 
-// router.post(
-//   '/login',
-//   validateRequest(AuthValidation.loginZodSchema),
-//   UserController.loginUser
-// );
+router.post(
+  '/login',
+  validateRequest(AuthValidation.loginZodSchema),
+  UserController.loginUser
+);
 // router.post(
 //   '/refresh-token',
 //   validateRequest(AuthValidation.refreshTokenZodSchema),

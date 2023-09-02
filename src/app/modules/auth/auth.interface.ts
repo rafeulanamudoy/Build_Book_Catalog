@@ -16,21 +16,20 @@
 //   }
 // }
 
-// export type IUserExistReturn = {
-//   _id: mongoose.Types.ObjectId
-//   email: string
+export type IUserExistReturn = {
+  id: string;
+  email: string;
 
-//   password: string
-// }
-// export type ILoginUser = {
-//   email: string
-//   password: string
-// }
-// export type ILoginUserResponse = {
-//   refreshToken?: string
-//   accessToken: string
-//   email: string
-// }
-// export type IRefreshTokenResponse = {
-//   accessToken: string
-// }
+  password: string;
+};
+export type ILoginUser = {
+  email: string;
+  password: string;
+};
+export type ILoginUserResponse = {
+  refreshToken?: string;
+  token: string;
+};
+export type IRefreshTokenResponse = {
+  accessToken: string;
+};

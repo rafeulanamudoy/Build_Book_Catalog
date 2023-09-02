@@ -1,6 +1,7 @@
 import httpStatus from 'http-status';
 
 import { Request, Response } from 'express';
+import config from '../../../config';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { UserService } from './auth.service';
@@ -24,30 +25,30 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
     });
   }
 });
-// const loginUser = catchAsync(async (req: Request, res: Response) => {
-//   const { ...loginData } = req.body;
-//   const result = await UserService.loginUser(loginData);
-//   //console.log(result)
+const loginUser = catchAsync(async (req: Request, res: Response) => {
+  const { ...loginData } = req.body;
+  const result = await UserService.loginUser(loginData);
+  //console.log(result)
 
-//   // set refresh token into cookie
-//   const cookieOptions = {
-//     secure: config.env === 'production',
-//     httpOnly: true,
-//   };
+  // set refresh token into cookie
+  const cookieOptions = {
+    secure: config.env === 'production',
+    httpOnly: true,
+  };
 
-//   if (result !== null) {
-//     const { refreshToken, ...others } = result;
+  if (result !== null) {
+    const { refreshToken, ...others } = result;
 
-//     res.cookie('refreshToken', refreshToken, cookieOptions);
+    res.cookie('refreshToken', refreshToken, cookieOptions);
 
-//     sendResponse(res, {
-//       statusCode: httpStatus.OK,
-//       success: true,
-//       message: 'User logged in successfully!',
-//       data: others,
-//     });
-//   }
-// });
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'User sign in successfully!',
+      data: others,
+    });
+  }
+});
 // const refreshToken = catchAsync(async (req: Request, res: Response) => {
 //   const { refreshToken } = req.cookies;
 //   console.log('my cookies', req.cookies);
@@ -69,6 +70,6 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
 
 export const UserController = {
   createUser,
-  // loginUser,
+  loginUser,
   // refreshToken,
 };
