@@ -14,3 +14,8 @@ router.delete(
   auth(ENUM_USER_ROLE.ADMIN),
   UserController.deleteSingleUser
 );
+router.patch(
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
+  UserController.updateSingleUser
+);
