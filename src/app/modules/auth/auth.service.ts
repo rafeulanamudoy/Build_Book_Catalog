@@ -55,39 +55,47 @@ const loginUser = async (
     refreshToken,
   };
 };
-// const refreshToken = async (token: string) => {
-//   let verifiedToken = null
-//   try {
-//     verifiedToken = jwtHelpers.verifyToken(
-//       token,
-//       config.jwt.refresh_secret as Secret
-//     )
-//   } catch (err) {
-//     throw new ApiError(httpStatus.FORBIDDEN, 'Invalid Refresh Token')
-//   }
-//   console.log('decoded token ', verifiedToken)
-//   const { _id } = verifiedToken
+const refreshToken = async (token: string) => {
+  let verifiedToken = null;
+  try {
+    verifiedToken = jwtHelpers.verifyToken(
+      token,
+      config.jwt.refresh_secret as Secret
+    );
+  } catch (err) {
+    throw new ApiError(httpStatus.FORBIDDEN, 'Invalid Refresh Token');
+  }
+  console.log('decoded token ', verifiedToken);
+  const { id } = verifiedToken;
 
-//   const isUserExist = await User.findOne({ _id })
-//   if (!isUserExist) {
-//     throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist')
-//   }
+  const isUserExist = await prisma.user.findUnique({
+    where: { id },
+  });
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
+  }
 
-//   const newAccessToken = jwtHelpers.createToken(
-//     {
-//       _id: isUserExist._id,
-//       email: isUserExist.email,
-//     },
-//     config.jwt.secret as Secret,
-//     config.jwt.expires_in as string
-//   )
+  const newAccessToken = jwtHelpers.createToken(
+    {
+      id: isUserExist.id,
+      email: isUserExist.email,
+    },
+    config.jwt.secret as Secret,
+    config.jwt.expires_in as string
+  );
 
-//   return {
-//     accessToken: newAccessToken,
-//   }
-// }
-export const UserService = {
+  return {
+    accessToken: newAccessToken,
+  };
+};
+
+const getAllUsers = async (): Promise<User[]> => {
+  const result = await prisma.user.findMany({});
+  return result;
+};
+export const AuthService = {
   createUser,
   loginUser,
-  // refreshToken,
+  refreshToken,
+  getAllUsers,
 };
