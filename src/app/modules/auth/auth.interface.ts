@@ -18,7 +18,7 @@
 
 export type IUserExistReturn = {
   id: string;
-  email: string;
+  role: string;
 
   password: string;
 };

@@ -4,7 +4,7 @@ import prisma from '../shared/prisma';
 async function isUserExist(email: string): Promise<IUserExistReturn | null> {
   const user = await prisma.user.findUnique({
     where: { email },
-    select: { id: true, email: true, password: true },
+    select: { id: true, email: true, password: true, role: true },
   });
 
   return user;
