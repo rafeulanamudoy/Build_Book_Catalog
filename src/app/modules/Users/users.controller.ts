@@ -23,7 +23,19 @@ const getSingleUser = catchAsync(async (req: Request, res: Response) => {
     success: true,
     statusCode: httpStatus.OK,
 
-    message: 'Users retrieved successfully',
+    message: 'User getched successfully',
+    data: data,
+  });
+});
+
+const deleteSingleUser = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const data = await UserService.deleteSingleUser(id);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+
+    message: 'Users deleted successfully',
     data: data,
   });
 });
@@ -31,4 +43,5 @@ const getSingleUser = catchAsync(async (req: Request, res: Response) => {
 export const UserController = {
   getAllUsers,
   getSingleUser,
+  deleteSingleUser,
 };

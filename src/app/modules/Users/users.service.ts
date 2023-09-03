@@ -12,7 +12,14 @@ const getSingleUser = async (id: string): Promise<User | null> => {
   });
   return result;
 };
+const deleteSingleUser = async (id: string): Promise<User | null> => {
+  const result = await prisma.user.delete({
+    where: { id },
+  });
+  return result;
+};
 export const UserService = {
   getAllUsers,
   getSingleUser,
+  deleteSingleUser,
 };
