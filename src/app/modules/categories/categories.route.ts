@@ -18,5 +18,6 @@ router.post(
 );
 
 router.get('/:id', CategoryController.getSingleCategory);
+router.patch('/:id', CategoryController.updateCategory);
 
 router.get('/', CategoryController.getCatagories);

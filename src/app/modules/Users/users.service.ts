@@ -21,14 +21,14 @@ const deleteSingleUser = async (id: string): Promise<User | null> => {
 
 const updateSingleUser = async (
   id: string,
-  data: Partial<User>
+  payload: Partial<User>
 ): Promise<User | null> => {
   const result = await prisma.user.update({
     where: {
       id,
     },
     data: {
-      ...data,
+      ...payload,
     },
   });
   return result;
