@@ -16,3 +16,7 @@ router.post(
 
   CategoryController.createCatagory
 );
+
+router.get('/:id', CategoryController.getSingleCategory);
+
+router.get('/', CategoryController.getCatagories);
