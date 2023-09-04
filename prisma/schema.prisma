@@ -23,12 +23,72 @@ model User  {
   profileImg String
   createdAt             DateTime               @default(now())
   updatedAt             DateTime               @updatedAt
-
+ reveiw ReviewAndRating[]
+ orders OrderModel[]
 
   @@map("users")
 }
 
+model Category {
+
+  id String @id @default(uuid())
+  title String
+
+    @@map("catagories")
+
+    books BookModel[]
+}
+
+model BookModel{
+
+  id String @id @default(uuid())
+  title String
+  author String
+  price Float
+  genre String
+  publicationDate DateTime
+  userReview ReviewAndRating[]
+
+  category Category @relation(fields: [categoryId],references: [id])
+  categoryId String 
+   @@map("bookModel")
+}
+
+model ReviewAndRating{
+
+id String @id @default(uuid())
+review String
+rating Int
+
+userReveiw User @relation( fields: [userId],references: [id])
+userId String  
+
+
+bookReveiw BookModel @relation(fields: [bookId],references: [id])
+bookId String
+   @@map("reviewAndRating")
+}
+
+model OrderModel{
+
+id String @id @default(uuid())
+
+userOrder User @relation(fields: [userId],references: [id])
+userId String
+ orderedBooks Json[]
+ status Status @default(pending)
+ createdAt  DateTime  @default(now())
+
+  @@map("orderModel")
+}
 enum UserRole {
   admin
   customer
+}
+
+enum Status {
+pending
+shipped
+delivered
+
 }
