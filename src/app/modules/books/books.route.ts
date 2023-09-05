@@ -17,5 +17,14 @@ router.post(
 );
 router.get('/:categoryId/category', BookController.getBookByCategory);
 router.get('/:id', BookController.getSingleBook);
-router.patch('/:id', BookController.updateSingleBook);
+router.patch(
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
+  BookController.updateSingleBook
+);
+router.delete(
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN),
+  BookController.deleteSingleBook
+);
 router.get('/', BookController.getAllBooks);
