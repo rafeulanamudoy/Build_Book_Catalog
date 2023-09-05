@@ -58,8 +58,40 @@ const getBookByCategory = catchAsync(async (req: Request, res: Response) => {
     data: result.data,
   });
 });
+const getSingleBook = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  // console.log(category);
+  const result = await BookService.getSingleBook(id);
+  // eslint-disable-next-line no-unused-vars
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+
+    message: 'Books get successfully',
+
+    data: result,
+  });
+});
+
+const updateSingleBook = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  const result = await BookService.updateSingleBook(id, req.body);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+
+    message: 'Book updated successfully',
+
+    data: result,
+  });
+});
 export const BookController = {
   createBooks,
   getAllBooks,
   getBookByCategory,
+  getSingleBook,
+  updateSingleBook,
 };

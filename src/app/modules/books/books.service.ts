@@ -152,8 +152,32 @@ const getBookByCategory = async (id: string, options: IPaginationOptions) => {
     data: result.books,
   };
 };
+
+const getSingleBook = async (id: string): Promise<BookModel | null> => {
+  const result = await prisma.bookModel.findUnique({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
+
+const updateSingleBook = async (
+  id: string,
+  data: Partial<BookModel>
+): Promise<BookModel | null> => {
+  const result = await prisma.bookModel.update({
+    where: {
+      id,
+    },
+    data: data,
+  });
+  return result;
+};
 export const BookService = {
   createBooks,
   getAllBooks,
   getBookByCategory,
+  getSingleBook,
+  updateSingleBook,
 };
