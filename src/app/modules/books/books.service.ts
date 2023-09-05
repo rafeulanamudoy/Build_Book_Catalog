@@ -47,6 +47,12 @@ const getAllBooks = async (
               equals: numericValue,
             },
           };
+        } else if (field === 'category') {
+          return {
+            category: {
+              id: value as string,
+            },
+          };
         } else if (field === 'minPrice') {
           const parseMinPrice = parseInt(value as string);
 
@@ -106,20 +112,45 @@ const getAllBooks = async (
   };
 };
 
-const getBookByCategory = async (id: string): Promise<BookModel[]> => {
-  // console.log(user)
-  const data = await prisma.category.findUnique({
+const getBookByCategory = async (id: string, options: IPaginationOptions) => {
+  const { page, size, skip } = paginationHelpers.calculatePagination(options);
+  // console.log(page, size, skip);
+
+  const result = await prisma.category.findUnique({
     where: {
       id,
     },
     include: {
-      books: true,
+      books: {
+        skip,
+        take: size,
+      },
     },
   });
-  if (!data) {
-    return [];
+
+  if (!result) {
+    return {
+      meta: {
+        page,
+        size,
+        total: 0,
+        totalPage: 0,
+      },
+      data: [],
+    };
   }
-  return data?.books;
+  const total = result?.books.length;
+
+  const totalPage = Math.ceil(total / size);
+  return {
+    meta: {
+      page,
+      size,
+      total,
+      totalPage,
+    },
+    data: result.books,
+  };
 };
 export const BookService = {
   createBooks,

@@ -43,8 +43,10 @@ const getAllBooks = catchAsync(async (req: Request, res: Response) => {
 
 const getBookByCategory = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.categoryId;
+  const paginationOptions = pick(req.query, paginationFields);
+
   // console.log(category);
-  const result = await BookService.getBookByCategory(id);
+  const result = await BookService.getBookByCategory(id, paginationOptions);
   // eslint-disable-next-line no-unused-vars
 
   sendResponse(res, {
@@ -52,7 +54,8 @@ const getBookByCategory = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
 
     message: 'Books with associated category data fetched successfully',
-    data: result,
+    meta: result.meta,
+    data: result.data,
   });
 });
 export const BookController = {
