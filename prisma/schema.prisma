@@ -75,11 +75,20 @@ id String @id @default(uuid())
 
 userOrder User @relation(fields: [userId],references: [id])
 userId String
- orderedBooks Json[]
+orderedBooks OrderedBook[]
  status Status @default(pending)
  createdAt  DateTime  @default(now())
 
   @@map("orderModel")
+}
+
+model  OrderedBook{
+  id String @id @default(uuid())
+  orderId String
+  order OrderModel @relation(fields: [orderId],references: [id])
+
+  bookId String
+  quantity Int
 }
 enum UserRole {
   admin

@@ -5,6 +5,7 @@ import sendResponse from '../../../shared/sendResponse';
 import { UserService } from './users.service';
 const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   const data = await UserService.getAllUsers();
+  console.log(req.cookies, 'cookies check');
   console.log(req.user, 'user info');
   console.log(req.headers.authorization);
   sendResponse(res, {

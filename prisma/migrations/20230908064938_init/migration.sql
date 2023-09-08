@@ -56,11 +56,20 @@ CREATE TABLE "reviewAndRating" (
 CREATE TABLE "orderModel" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "orderedBooks" JSONB[],
     "status" "Status" NOT NULL DEFAULT 'pending',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "orderModel_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "OrderedBook" (
+    "id" TEXT NOT NULL,
+    "orderId" TEXT NOT NULL,
+    "bookId" TEXT NOT NULL,
+    "quantity" INTEGER NOT NULL,
+
+    CONSTRAINT "OrderedBook_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -77,3 +86,6 @@ ALTER TABLE "reviewAndRating" ADD CONSTRAINT "reviewAndRating_bookId_fkey" FOREI
 
 -- AddForeignKey
 ALTER TABLE "orderModel" ADD CONSTRAINT "orderModel_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "OrderedBook" ADD CONSTRAINT "OrderedBook_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "orderModel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
