@@ -1,4 +1,4 @@
-import { OrderedBook } from '@prisma/client';
+import { OrderModel, OrderedBook } from '@prisma/client';
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/ApiError';
 import prisma from '../../../shared/prisma';
@@ -42,6 +42,33 @@ const createOrder = async (
   });
   return responseData;
 };
+
+const getOrders = async (
+  role: string,
+  userId: string
+): Promise<OrderModel[]> => {
+  console.log(role, userId, 'from serv ice');
+  let result;
+
+  if (userId && role === 'admin') {
+    result = await prisma.orderModel.findMany({
+      include: {
+        orderedBooks: true,
+      },
+    });
+    return result;
+  }
+  result = await prisma.orderModel.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      orderedBooks: true,
+    },
+  });
+  return result;
+};
 export const OrderService = {
   createOrder,
+  getOrders,
 };

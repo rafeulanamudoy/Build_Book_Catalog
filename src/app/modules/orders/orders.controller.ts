@@ -7,6 +7,7 @@ import { OrderService } from './orders.service';
 
 import { Secret } from 'jsonwebtoken';
 import config from '../../../config';
+import ApiError from '../../../errors/ApiError';
 
 const createOrder = catchAsync(async (req: Request, res: Response) => {
   const { refreshToken } = req.cookies;
@@ -26,7 +27,22 @@ const createOrder = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const getOrders = catchAsync(async (req: Request, res: Response) => {
+  if (!req.user) {
+    throw new ApiError(400, 'you are not authorized');
+  }
+  const { id, role } = req.user;
+  const result = await OrderService.getOrders(role, id);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+
+    message: 'Order get  successfully',
+    data: result,
+  });
+});
 
 export const OrderController = {
   createOrder,
+  getOrders,
 };
