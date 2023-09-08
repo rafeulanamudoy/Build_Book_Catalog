@@ -1,21 +1,16 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
-import { jwtHelpers } from '../../../helpers/jwtHelpers';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { OrderService } from './orders.service';
 
-import { Secret } from 'jsonwebtoken';
-import config from '../../../config';
 import ApiError from '../../../errors/ApiError';
 
 const createOrder = catchAsync(async (req: Request, res: Response) => {
-  const { refreshToken } = req.cookies;
-
-  const { id } = jwtHelpers.verifyToken(
-    refreshToken,
-    config.jwt.refresh_secret as Secret
-  );
+  if (!req.user) {
+    throw new ApiError(400, 'you are not authorized');
+  }
+  const { id } = req.user;
   const orderedBooks = req.body;
   console.log();
   const result = await OrderService.createOrder(id, orderedBooks.orderedBooks);
