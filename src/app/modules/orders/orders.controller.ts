@@ -37,7 +37,7 @@ const getOrders = catchAsync(async (req: Request, res: Response) => {
     success: true,
     statusCode: httpStatus.OK,
 
-    message: 'Order get  successfully',
+    message: 'Order retrieved   successfully',
     data: result,
   });
 });
@@ -49,7 +49,7 @@ const getSingleOrder = catchAsync(async (req: Request, res: Response) => {
     success: true,
     statusCode: httpStatus.OK,
 
-    message: 'Order get  successfully',
+    message: 'Order fetched   successfully',
     data: result,
   });
 });

@@ -16,7 +16,7 @@ router.post(
 
   CategoryController.createCatagory
 );
-
+router.get('/', CategoryController.getCatagories);
 router.get('/:id', CategoryController.getSingleCategory);
 router.patch(
   '/:id',
@@ -28,5 +28,3 @@ router.delete(
   auth(ENUM_USER_ROLE.ADMIN),
   CategoryController.deleteCategory
 );
-
-router.get('/', CategoryController.getCatagories);
