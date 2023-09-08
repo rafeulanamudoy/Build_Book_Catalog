@@ -68,7 +68,19 @@ const getOrders = async (
   });
   return result;
 };
+const getSingleOrder = async (id: string): Promise<OrderModel | null> => {
+  const result = await prisma.orderModel.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      orderedBooks: true,
+    },
+  });
+  return result;
+};
 export const OrderService = {
   createOrder,
   getOrders,
+  getSingleOrder,
 };
