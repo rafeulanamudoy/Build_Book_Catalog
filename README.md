@@ -2,6 +2,8 @@
 
 #### Create a new User:https://book-catalog-prisma-761z3cmdt-rafeulanamudoy.vercel.app/api/v1/auth/signup (Post)
 
+#### User SignIn: https://book-catalog-prisma-761z3cmdt-rafeulanamudoy.vercel.app/api/v1/auth/signin
+
 #### Get All Users:https://book-catalog-prisma-761z3cmdt-rafeulanamudoy.vercel.app/api/v1/users (Get)
 
 #### Get a Single User:https://book-catalog-prisma-761z3cmdt-rafeulanamudoy.vercel.app/api/v1/users/:id (Get)
