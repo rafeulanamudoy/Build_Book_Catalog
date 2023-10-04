@@ -26,6 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const config_1 = __importDefault(require("../../../config"));
+const jwtHelpers_1 = require("../../../helpers/jwtHelpers");
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const auth_service_1 = require("./auth.service");
@@ -49,7 +50,6 @@ const createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
 const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const loginData = __rest(req.body, []);
     const result = yield auth_service_1.AuthService.loginUser(loginData);
-    //console.log(result)
     // set refresh token into cookie
     const cookieOptions = {
         secure: config_1.default.env === 'production',
@@ -60,6 +60,8 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
         // console.log(token, 'from controller');
         // console.log(result, 'to check result');
         res.cookie('refreshToken', refreshToken, cookieOptions);
+        const decodedToken = jwtHelpers_1.jwtHelpers.verifyToken(token, config_1.default.jwt.secret);
+        console.log(decodedToken, 'check the decoded token');
         (0, sendResponse_1.default)(res, {
             statusCode: http_status_1.default.OK,
             success: true,

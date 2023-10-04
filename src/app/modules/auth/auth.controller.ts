@@ -1,7 +1,9 @@
 import httpStatus from 'http-status';
 
 import { Request, Response } from 'express';
+import { Secret } from 'jsonwebtoken';
 import config from '../../../config';
+import { jwtHelpers } from '../../../helpers/jwtHelpers';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { IRefreshTokenResponse } from './auth.interface';
@@ -29,7 +31,6 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   const { ...loginData } = req.body;
   const result = await AuthService.loginUser(loginData);
-  //console.log(result)
 
   // set refresh token into cookie
   const cookieOptions = {
@@ -44,7 +45,11 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
     // console.log(result, 'to check result');
 
     res.cookie('refreshToken', refreshToken, cookieOptions);
-
+    const decodedToken = jwtHelpers.verifyToken(
+      token,
+      config.jwt.secret as Secret
+    );
+    console.log(decodedToken, 'check the decoded token');
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

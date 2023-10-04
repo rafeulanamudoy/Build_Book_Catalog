@@ -39,10 +39,11 @@ const createBooks = (data) => __awaiter(void 0, void 0, void 0, function* () {
 const getAllBooks = (filters, options) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, size, skip } = paginationHelper_1.paginationHelpers.calculatePagination(options);
     const { search } = filters, filterData = __rest(filters, ["search"]);
-    //console.log(filters, 'filters data');
+    console.log(options, 'chekc options');
+    console.log(filters, 'filters data');
     //console.log(filterData, 'filterData');
     //   console.log(search, filterData, 'filters');
-    //   console.log(page, limit, skip, 'pagination');
+    // console.log(page, limit, skip, 'pagination');
     //console.log(search);
     const andConditons = [];
     if (search) {

@@ -20,11 +20,13 @@ const getAllBooks = async (
 ) => {
   const { page, size, skip } = paginationHelpers.calculatePagination(options);
   const { search, ...filterData } = filters;
-  //console.log(filters, 'filters data');
+
+  console.log(options, 'chekc options');
+  console.log(filters, 'filters data');
   //console.log(filterData, 'filterData');
 
   //   console.log(search, filterData, 'filters');
-  //   console.log(page, limit, skip, 'pagination');
+  // console.log(page, limit, skip, 'pagination');
   //console.log(search);
   const andConditons = [];
   if (search) {

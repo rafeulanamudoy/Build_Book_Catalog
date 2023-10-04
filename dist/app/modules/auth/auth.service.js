@@ -44,10 +44,10 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         // );
         throw new ApiError_1.default(http_status_1.default.UNAUTHORIZED, 'Password is incorrect');
     }
-    const { id, role } = userExist;
-    // console.log(userExist, 'from auth service tocheck user');
-    const token = jwtHelpers_1.jwtHelpers.createToken({ id, role }, config_1.default.jwt.secret, config_1.default.jwt.expires_in);
-    const refreshToken = jwtHelpers_1.jwtHelpers.createToken({ id, role }, config_1.default.jwt.refresh_secret, config_1.default.jwt.refresh_expires_in);
+    const { id: userId, role } = userExist;
+    console.log(userExist, 'from auth service tocheck user');
+    const token = jwtHelpers_1.jwtHelpers.createToken({ userId, role }, config_1.default.jwt.secret, config_1.default.jwt.expires_in);
+    const refreshToken = jwtHelpers_1.jwtHelpers.createToken({ userId, role }, config_1.default.jwt.refresh_secret, config_1.default.jwt.refresh_expires_in);
     return {
         token,
         refreshToken,
