@@ -38,7 +38,10 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
   };
 
   if (result !== null) {
-    const { refreshToken, ...others } = result;
+    const { token, refreshToken } = result;
+
+    // console.log(token, 'from controller');
+    // console.log(result, 'to check result');
 
     res.cookie('refreshToken', refreshToken, cookieOptions);
 
@@ -46,7 +49,7 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
       statusCode: httpStatus.OK,
       success: true,
       message: 'User sign in successfully!',
-      data: others,
+      token: token,
     });
   }
 });

@@ -28,19 +28,19 @@ const loginUser = async (
   if (!userExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User Doesn,t Exist');
   }
-  console.log(userExist, 'from service file 30 number line');
+  // console.log(userExist, 'from service file 30 number line');
   if (
     userExist.password &&
     !(await isPasswordMatched(password, userExist.password))
   ) {
-    console.log(
-      await isPasswordMatched(password, userExist.password),
-      'to chekc password'
-    );
+    // console.log(
+    //   await isPasswordMatched(password, userExist.password),
+    //   'to chekc password'
+    // );
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Password is incorrect');
   }
   const { id, role } = userExist;
-  console.log(userExist, 'from auth service tocheck user');
+  // console.log(userExist, 'from auth service tocheck user');
   const token = jwtHelpers.createToken(
     { id, role },
     config.jwt.secret as Secret,

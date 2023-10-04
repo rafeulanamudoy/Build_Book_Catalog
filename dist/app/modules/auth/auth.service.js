@@ -35,14 +35,17 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     if (!userExist) {
         throw new ApiError_1.default(http_status_1.default.NOT_FOUND, 'User Doesn,t Exist');
     }
-    console.log(userExist, 'from service file 30 number line');
+    // console.log(userExist, 'from service file 30 number line');
     if (userExist.password &&
         !(yield (0, passwordMatch_1.default)(password, userExist.password))) {
-        console.log(yield (0, passwordMatch_1.default)(password, userExist.password), 'to chekc password');
+        // console.log(
+        //   await isPasswordMatched(password, userExist.password),
+        //   'to chekc password'
+        // );
         throw new ApiError_1.default(http_status_1.default.UNAUTHORIZED, 'Password is incorrect');
     }
     const { id, role } = userExist;
-    console.log(userExist, 'from auth service tocheck user');
+    // console.log(userExist, 'from auth service tocheck user');
     const token = jwtHelpers_1.jwtHelpers.createToken({ id, role }, config_1.default.jwt.secret, config_1.default.jwt.expires_in);
     const refreshToken = jwtHelpers_1.jwtHelpers.createToken({ id, role }, config_1.default.jwt.refresh_secret, config_1.default.jwt.refresh_expires_in);
     return {

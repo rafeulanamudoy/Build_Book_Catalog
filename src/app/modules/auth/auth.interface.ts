@@ -27,7 +27,7 @@ export type ILoginUser = {
   password: string;
 };
 export type ILoginUserResponse = {
-  refreshToken?: string;
+  refreshToken: string;
   token: string;
 };
 export type IRefreshTokenResponse = {

@@ -56,13 +56,15 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
         httpOnly: true,
     };
     if (result !== null) {
-        const { refreshToken } = result, others = __rest(result, ["refreshToken"]);
+        const { token, refreshToken } = result;
+        // console.log(token, 'from controller');
+        // console.log(result, 'to check result');
         res.cookie('refreshToken', refreshToken, cookieOptions);
         (0, sendResponse_1.default)(res, {
             statusCode: http_status_1.default.OK,
             success: true,
             message: 'User sign in successfully!',
-            data: others,
+            token: token,
         });
     }
 }));
